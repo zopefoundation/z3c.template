@@ -412,6 +412,47 @@ created earlier in this test.
   <div>demo content</div>
 
 
+Context-specific templates
+--------------------------
+
+The ``TemplateFactory`` can be also used for (view, request, context)
+lookup. It's useful when you want to override a template for specific
+content object or type.
+
+Let's define a sample content type and instantiate a view for it.
+
+  >>> class IContent(zope.interface.Interface):
+  ...     pass
+  >>> class Content(object):
+  ...     zope.interface.implements(IContent)
+
+  >>> content = Content()
+  >>> view = UseOfViewTemplate(content, request)
+
+Now, let's provide a (view, request, context) adapter using TemplateFactory.
+
+  >>> contextTemplate = os.path.join(temp_dir, 'context.pt')
+  >>> open(contextTemplate, 'w').write('<div>context-specific</div>')
+  >>> factory = TemplateFactory(contextTemplate, 'text/html')
+
+  >>> component.provideAdapter(factory,
+  ...     (IUseOfViewTemplate, IDefaultBrowserLayer, IContent), IPageTemplate)
+
+First. Let's try to simply get it as a multi-adapter.
+
+  >>> template = zope.component.getMultiAdapter((view, request, content),
+  ...                 interfaces.IPageTemplate)
+  >>> print template(view)
+  <div>context-specific</div>
+
+The ``getPageTemplate`` and friends will try to lookup a context-specific
+template before doing more generic (view, request) lookup, so our view
+should already use our context-specific template:
+
+  >>> print view.template()
+  <div>context-specific</div>
+
+
 Use case ``template by interface``
 ----------------------------------
 

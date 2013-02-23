@@ -35,7 +35,8 @@ First let's show how we use a template for produce content from a view:
   >>> import os, tempfile
   >>> temp_dir = tempfile.mkdtemp()
   >>> contentTemplate = os.path.join(temp_dir, 'contentTemplate.pt')
-  >>> open(contentTemplate, 'w').write('''<div>demo content</div>''')
+  >>> with open(contentTemplate, 'w') as file:
+  ...     _ = file.write('<div>demo content</div>')
 
 And register a view class implementing a interface:
 
@@ -46,8 +47,8 @@ And register a view class implementing a interface:
 
   >>> class IMyView(zope.interface.Interface):
   ...     pass
-  >>> class MyView(BrowserPage):
-  ...     zope.interface.implements(IMyView)
+  >>> @zope.interface.implementer(IMyView)
+  ... class MyView(BrowserPage):
   ...     template = None
   ...     def render(self):
   ...         if self.template is None:
@@ -64,7 +65,7 @@ Let's call the view and check the output:
 
 Since the template is not yet registered, rendering the view will fail:
 
-  >>> print view.render()
+  >>> print(view.render())
   Traceback (most recent call last):
   ...
   ComponentLookupError: ......
@@ -96,18 +97,19 @@ We register the factory on a view interface and a layer.
 Now that we have a registered layout template for the default layer we can
 call our view again.
 
-  >>> print view.render()
+  >>> print(view.render())
   <div>demo content</div>
 
 Now we register a new template on the specific interface of our view.
 
   >>> myTemplate = os.path.join(temp_dir, 'myTemplate.pt')
-  >>> open(myTemplate, 'w').write('''<div>My content</div>''')
+  >>> with open(myTemplate, 'w') as file:
+  ...     _ = file.write('<div>My content</div>')
   >>> factory = TemplateFactory(myTemplate, 'text/html')
   >>> component.provideAdapter(
   ...     factory,
   ...     (IMyView, IDefaultBrowserLayer), interfaces.IContentTemplate)
-  >>> print view.render()
+  >>> print(view.render())
   <div>My content</div>
 
 It is possible to provide the template directly.
@@ -115,13 +117,14 @@ It is possible to provide the template directly.
 We create a new template.
 
   >>> viewContent = os.path.join(temp_dir, 'viewContent.pt')
-  >>> open(viewContent, 'w').write('''<div>view content</div>''')
+  >>> with open(viewContent, 'w') as file:
+  ...     _ = file.write('<div>view content</div>')
 
 and a view:
 
   >>> from z3c.template import ViewPageTemplateFile
-  >>> class MyViewWithTemplate(BrowserPage):
-  ...     zope.interface.implements(IMyView)
+  >>> @zope.interface.implementer(IMyView)
+  ... class MyViewWithTemplate(BrowserPage):
   ...     template = ViewPageTemplateFile(viewContent)
   ...     def render(self):
   ...         if self.template is None:
@@ -134,7 +137,7 @@ and a view:
 If we render this view we get the implemented layout template and not the
 registered one.
 
-  >>> print contentView.render()
+  >>> print(contentView.render())
   <div>view content</div>
 
 
@@ -146,8 +149,8 @@ that this view uses the __call__ method for invoke a layout template:
 
   >>> class ILayoutView(zope.interface.Interface):
   ...     pass
-  >>> class LayoutView(BrowserPage):
-  ...     zope.interface.implements(ILayoutView)
+  >>> @zope.interface.implementer(ILayoutView)
+  ... class LayoutView(BrowserPage):
   ...     layout = None
   ...     def __call__(self):
   ...         if self.layout is None:
@@ -160,7 +163,8 @@ that this view uses the __call__ method for invoke a layout template:
 Define and register a new layout template:
 
   >>> layoutTemplate = os.path.join(temp_dir, 'layoutTemplate.pt')
-  >>> open(layoutTemplate, 'w').write('''<div>demo layout</div>''')
+  >>> with open(layoutTemplate, 'w') as file:
+  ...     _ = file.write('<div>demo layout</div>')
   >>> factory = TemplateFactory(layoutTemplate, 'text/html')
 
 We register the template factory on a view interface and a layer providing the
@@ -178,18 +182,19 @@ ILayoutTemplate interface.
 Now that we have a registered layout template for the default layer we can
 call our view again.
 
-  >>> print view2()
+  >>> print(view2())
   <div>demo layout</div>
 
 Now we register a new layout template on the specific interface of our view.
 
   >>> myLayout = os.path.join(temp_dir, 'myLayout.pt')
-  >>> open(myLayout, 'w').write('''<div>My layout</div>''')
+  >>> with open(myLayout, 'w') as file:
+  ...     _ = file.write('<div>My layout</div>')
   >>> factory = TemplateFactory(myLayout, 'text/html')
   >>> component.provideAdapter(factory,
   ...     (ILayoutView, IDefaultBrowserLayer),
   ...      interfaces.ILayoutTemplate)
-  >>> print view2()
+  >>> print(view2())
   <div>My layout</div>
 
 It is possible to provide the layout template directly.
@@ -197,10 +202,11 @@ It is possible to provide the layout template directly.
 We create a new template.
 
   >>> viewLayout = os.path.join(temp_dir, 'viewLayout.pt')
-  >>> open(viewLayout, 'w').write('''<div>view layout</div>''')
+  >>> with open(viewLayout, 'w') as file:
+  ...     _ = file.write('''<div>view layout</div>''')
 
-  >>> class LayoutViewWithLayoutTemplate(BrowserPage):
-  ...     zope.interface.implements(ILayoutView)
+  >>> @zope.interface.implementer(ILayoutView)
+  ... class LayoutViewWithLayoutTemplate(BrowserPage):
   ...     layout = ViewPageTemplateFile(viewLayout)
   ...     def __call__(self):
   ...         if self.layout is None:
@@ -213,7 +219,7 @@ We create a new template.
 If we render this view we get the implemented layout template and not the
 registered one.
 
-  >>> print layoutView()
+  >>> print(layoutView())
   <div>view layout</div>
 
 
@@ -232,8 +238,8 @@ template and offer a method for call content.
   >>> class IFullView(zope.interface.Interface):
   ...     pass
 
-  >>> class FullView(BrowserPage):
-  ...     zope.interface.implements(IFullView)
+  >>> @zope.interface.implementer(IFullView)
+  ... class FullView(BrowserPage):
   ...     layout = None
   ...     def render(self):
   ...         return u'rendered content'
@@ -248,7 +254,8 @@ template and offer a method for call content.
 Now define a layout for the view and register them:
 
   >>> completeLayout = os.path.join(temp_dir, 'completeLayout.pt')
-  >>> open(completeLayout, 'w').write('''
+  >>> with open(completeLayout, 'w') as file:
+  ...     _ = file.write('''
   ...   <div tal:content="view/render">
   ...     Full layout
   ...   </div>
@@ -261,7 +268,7 @@ Now define a layout for the view and register them:
 Now let's see if the layout template can call the content via calling render
 on the view:
 
-  >>> print completeView.__call__()
+  >>> print(completeView.__call__())
   <div>rendered content</div>
 
 
@@ -273,8 +280,8 @@ Now let's show how we combine this two templates in a real use case:
   >>> class IDocumentView(zope.interface.Interface):
   ...     pass
 
-  >>> class DocumentView(BrowserPage):
-  ...     zope.interface.implements(IDocumentView)
+  >>> @zope.interface.implementer(IDocumentView)
+  ... class DocumentView(BrowserPage):
   ...     template = None
   ...     layout = None
   ...     attr = None
@@ -297,7 +304,8 @@ Now let's show how we combine this two templates in a real use case:
 Define and register a content template...
 
   >>> template = os.path.join(temp_dir, 'template.pt')
-  >>> open(template, 'w').write('''
+  >>> with open(template, 'w') as file:
+  ...     _ = file.write('''
   ...   <div tal:content="view/attr">
   ...     here comes the value of attr
   ...   </div>
@@ -310,7 +318,8 @@ Define and register a content template...
 and define and register a layout template:
 
   >>> layout = os.path.join(temp_dir, 'layout.pt')
-  >>> open(layout, 'w').write('''
+  >>> with open(layout, 'w') as file:
+  ...     _ = file.write('''
   ... <html>
   ...   <body>
   ...     <div tal:content="structure view/render">
@@ -327,7 +336,7 @@ and define and register a layout template:
 Now call the view and check the result:
 
   >>> documentView = DocumentView(root, request)
-  >>> print documentView()
+  >>> print(documentView())
   <html>
     <body>
       <div>
@@ -343,7 +352,8 @@ Macros
 Use of macros.
 
   >>> macroTemplate = os.path.join(temp_dir, 'macroTemplate.pt')
-  >>> open(macroTemplate, 'w').write('''
+  >>> with open(macroTemplate, 'w') as file:
+  ...     _ = file.write('''
   ...   <metal:block define-macro="macro1">
   ...     <div>macro1</div>
   ...   </metal:block>
@@ -354,10 +364,10 @@ Use of macros.
   ...   ''')
 
   >>> factory = TemplateFactory(macroTemplate, 'text/html', 'macro1')
-  >>> print factory(view, request)()
+  >>> print(factory(view, request)())
   <div>macro1</div>
   >>> m2factory = TemplateFactory(macroTemplate, 'text/html', 'macro2')
-  >>> print m2factory(view, request)(div2="from the options")
+  >>> print(m2factory(view, request)(div2="from the options"))
   <div>macro2</div>
   <div>from the options</div>
 
@@ -384,8 +394,8 @@ system with all existing implementations such as `zope.formlib` and
   >>> from z3c.template.template import getPageTemplate
   >>> class IUseOfViewTemplate(zope.interface.Interface):
   ...     pass
-  >>> class UseOfViewTemplate(object):
-  ...     zope.interface.implements(IUseOfViewTemplate)
+  >>> @zope.interface.implementer(IUseOfViewTemplate)
+  ... class UseOfViewTemplate(object):
   ...
   ...     template = getPageTemplate()
   ...
@@ -397,7 +407,7 @@ By defining the "template" property as a "getPageTemplate" a lookup for
 a registered template is done when it is called.
 
   >>> simple = UseOfViewTemplate(root, request)
-  >>> print simple.template()
+  >>> print(simple.template())
   <div>demo content</div>
 
 Because the demo template was registered for any ("None") interface we see the
@@ -408,7 +418,7 @@ created earlier in this test.
   >>> factory = TemplateFactory(contentTemplate, 'text/html')
   >>> component.provideAdapter(factory,
   ...     (IUseOfViewTemplate, IDefaultBrowserLayer), IPageTemplate)
-  >>> print simple.template()
+  >>> print(simple.template())
   <div>demo content</div>
 
 
@@ -423,8 +433,9 @@ Let's define a sample content type and instantiate a view for it.
 
   >>> class IContent(zope.interface.Interface):
   ...     pass
-  >>> class Content(object):
-  ...     zope.interface.implements(IContent)
+  >>> @zope.interface.implementer(IContent)
+  ... class Content(object):
+  ...     pass
 
   >>> content = Content()
   >>> view = UseOfViewTemplate(content, request)
@@ -432,7 +443,8 @@ Let's define a sample content type and instantiate a view for it.
 Now, let's provide a (view, request, context) adapter using TemplateFactory.
 
   >>> contextTemplate = os.path.join(temp_dir, 'context.pt')
-  >>> open(contextTemplate, 'w').write('<div>context-specific</div>')
+  >>> with open(contextTemplate, 'w') as file:
+  ...     _ = file.write('<div>context-specific</div>')
   >>> factory = TemplateFactory(contextTemplate, 'text/html')
 
   >>> component.provideAdapter(factory,
@@ -443,14 +455,14 @@ First. Let's try to simply get it as a multi-adapter.
 
   >>> template = zope.component.getMultiAdapter((view, request, content),
   ...                 interfaces.IContentTemplate)
-  >>> print template(view)
+  >>> print(template(view))
   <div>context-specific</div>
 
 The ``getPageTemplate`` and friends will try to lookup a context-specific
 template before doing more generic (view, request) lookup, so our view
 should already use our context-specific template:
 
-  >>> print view.template()
+  >>> print(view.template())
   <div>context-specific</div>
 
 
@@ -472,8 +484,8 @@ Now define a view using such a custom template registration:
 
   >>> class IMyTemplateView(zope.interface.Interface):
   ...     pass
-  >>> class MyTemplateView(object):
-  ...     zope.interface.implements(IMyTemplateView)
+  >>> @zope.interface.implementer(IMyTemplateView)
+  ... class MyTemplateView(object):
   ...
   ...     template = getViewTemplate(IMyTemplate)
   ...
@@ -482,7 +494,7 @@ Now define a view using such a custom template registration:
   ...         self.request = request
 
   >>> myTempalteView = MyTemplateView(root, request)
-  >>> print myTempalteView.template()
+  >>> print(myTempalteView.template())
   <div>demo content</div>
 
 
@@ -504,8 +516,8 @@ Now define a view using such a custom named template registration:
 
   >>> class IMyNamedTemplateView(zope.interface.Interface):
   ...     pass
-  >>> class MyNamedTemplateView(object):
-  ...     zope.interface.implements(IMyNamedTemplateView)
+  >>> @zope.interface.implementer(IMyNamedTemplateView)
+  ... class MyNamedTemplateView(object):
   ...
   ...     template = getViewTemplate(IMyNamedTemplate, 'my template')
   ...
@@ -514,7 +526,7 @@ Now define a view using such a custom named template registration:
   ...         self.request = request
 
   >>> myNamedTempalteView = MyNamedTemplateView(root, request)
-  >>> print myNamedTempalteView.template()
+  >>> print(myNamedTempalteView.template())
   <div>demo content</div>
 
 
@@ -526,7 +538,8 @@ We can also register a new layout template by name and use it in a view:
   >>> from z3c.template.template import getLayoutTemplate
 
   >>> editLayout = os.path.join(temp_dir, 'editLayout.pt')
-  >>> open(editLayout, 'w').write('''
+  >>> with open(editLayout, 'w') as file:
+  ...     _ = file.write('''
   ...   <div>Edit layout</div>
   ...   <div tal:content="view/render">content</div>
   ... ''')
@@ -552,7 +565,7 @@ Now define a view using such a custom named template registration:
   ...         return self.layout()
 
   >>> myEditView = MyEditView(root, request)
-  >>> print myEditView()
+  >>> print(myEditView())
   <div>Edit layout</div>
   <div>edit content</div>
 
@@ -567,4 +580,4 @@ Cleanup
 Pagelet
 -------
 
-See z3c.pagelet for another template based layout generating implementation.
+See ``z3c.pagelet`` for another template based layout generating implementation.

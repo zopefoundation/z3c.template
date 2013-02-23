@@ -11,26 +11,48 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Tests
 """
-$Id$
-"""
-__docformat__ = "reStructuredText"
-
-from zope.app.testing import setup
-from zope.configuration import xmlconfig
 import doctest
 import itertools
+import re
 import unittest
+import zope.component
+from zope.configuration import xmlconfig
+from zope.component import testing
+from zope.testing import renormalizing
 
 import z3c.template.template
 
+checker = renormalizing.RENormalizing([
+    # Python 3 unicode removed the "u".
+    #(re.compile("u('.*?')"),
+    # r"\1"),
+    #(re.compile('u(".*?")'),
+    # r"\1"),
+    # Python 3 adds module name to exceptions.
+    (re.compile("zope.interface.interfaces.ComponentLookupError"),
+     r"ComponentLookupError"),
+    ])
+
+try:
+    import z3c.ptcompat
+except ImportError:
+    Z3CPT_AVAILABLE = False
+else:
+    Z3CPT_AVAILABLE = True
+
 
 def setUp(test):
-    root = setup.placefulSetUp(site=True)
-    test.globs['root'] = root
+    testing.setUp(test)
+    # Traversal Setup
+    from zope.traversing.testing import setUp
+    setUp()
+    test.globs['root'] = object()
 
 def tearDown(test):
-    setup.placefulTearDown()
+    testing.tearDown(test)
+    #setup.placefulTearDown()
 
 def setUpZPT(suite):
     setUp(suite)
@@ -49,14 +71,19 @@ def setUpZ3CPT(suite):
 
 
 def test_suite():
+    setups = (setUpZPT,)
+    if Z3CPT_AVAILABLE:
+        setups += (setUpZ3CPT,)
     tests = ((
         doctest.DocFileSuite('README.txt',
             setUp=setUp, tearDown=tearDown,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+            checker=checker,
             ),
         doctest.DocFileSuite('zcml.txt', setUp=setUp, tearDown=tearDown,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+            checker=checker,
             ),
-        ) for setUp in (setUpZPT, setUpZ3CPT,))
+        ) for setUp in setups)
 
     return unittest.TestSuite(itertools.chain(*tests))

@@ -18,8 +18,9 @@ We need a custom content template
 
   >>> import os, tempfile
   >>> temp_dir = tempfile.mkdtemp()
-  >>> file = os.path.join(temp_dir, 'content.pt')
-  >>> open(file, 'w').write('''<div>content</div>''')
+  >>> content_file = os.path.join(temp_dir, 'content.pt')
+  >>> with open(content_file, 'w') as file:
+  ...     _ = file.write('''<div>content</div>''')
 
 and a interface
 
@@ -30,8 +31,8 @@ and a interface
 and a view class:
 
   >>> from zope.publisher.browser import TestRequest
-  >>> class View(object):
-  ...     zope.interface.implements(IView)
+  >>> @zope.interface.implementer(IView)
+  ... class View(object):
   ...     def __init__(self, context, request):
   ...         self.context = context
   ...         self.request = request
@@ -54,7 +55,7 @@ and register them as a template within the ``z3c:template`` directive:
   ...       for="custom.IView"
   ...       />
   ... </configure>
-  ... """ % file, context=context)
+  ... """ % content_file, context=context)
 
 Let's get the template
 
@@ -70,7 +71,7 @@ and check them:
   >>> isinstance(template, ViewPageTemplateFile)
   True
 
-  >>> print template(view)
+  >>> print(template(view))
   <div>content</div>
 
 
@@ -79,8 +80,9 @@ Layout template
 
 Define a layout template
 
-  >>> file = os.path.join(temp_dir, 'layout.pt')
-  >>> open(file, 'w').write('''<div>layout</div>''')
+  >>> layout_file = os.path.join(temp_dir, 'layout.pt')
+  >>> with open(layout_file, 'w') as file:
+  ...     _ = file.write('''<div>layout</div>''')
 
 and register them as a layout template within the ``z3c:layout`` directive:
 
@@ -92,7 +94,7 @@ and register them as a layout template within the ``z3c:layout`` directive:
   ...       for="custom.IView"
   ...       />
   ... </configure>
-  ... """ % file, context=context)
+  ... """ % layout_file, context=context)
 
 Let's get the template
 
@@ -105,7 +107,7 @@ and check them:
   >>> isinstance(template, ViewPageTemplateFile)
   True
 
-  >>> print layout(view)
+  >>> print(layout(view))
   <div>layout</div>
 
 
@@ -120,16 +122,18 @@ Let's define some content type:
 
   >>> class IContent(zope.interface.Interface):
   ...     pass
-  >>> class Content(object):
-  ...     zope.interface.implements(IContent)
+  >>> @zope.interface.implementer(IContent)
+  ... class Content(object):
+  ...     pass
 
   >>> sys.modules['custom'].IContent = IContent
 
 Now, we can register a template for this class. Let's create one and
 register:
 
-  >>> file = os.path.join(temp_dir, 'context.pt')
-  >>> open(file, 'w').write('''<div>i'm context-specific</div>''')
+  >>> context_file = os.path.join(temp_dir, 'context.pt')
+  >>> with open(context_file, 'w') as file:
+  ...     _ = file.write('''<div>i'm context-specific</div>''')
 
   >>> context = xmlconfig.string("""
   ... <configure
@@ -140,7 +144,7 @@ register:
   ...       context="custom.IContent"
   ...       />
   ... </configure>
-  ... """ % file, context=context)
+  ... """ % context_file, context=context)
 
 We can now lookup it using the (view, request, context) discriminator:
 
@@ -150,13 +154,14 @@ We can now lookup it using the (view, request, context) discriminator:
   >>> template = zope.component.queryMultiAdapter((view, request, content),
   ...     interface=IContentTemplate)
 
-  >>> print template(view)
+  >>> print(template(view))
   <div>i'm context-specific</div>
 
 The same will work with layout registration directive:
 
-  >>> file = os.path.join(temp_dir, 'context_layout.pt')
-  >>> open(file, 'w').write('''<div>context-specific layout</div>''')
+  >>> context_layout_file = os.path.join(temp_dir, 'context_layout.pt')
+  >>> with open(context_layout_file, 'w') as file:
+  ...     _ = file.write('''<div>context-specific layout</div>''')
   >>> context = xmlconfig.string("""
   ... <configure
   ...     xmlns:z3c="http://namespaces.zope.org/z3c">
@@ -166,12 +171,12 @@ The same will work with layout registration directive:
   ...       context="custom.IContent"
   ...       />
   ... </configure>
-  ... """ % file, context=context)
+  ... """ % context_layout_file, context=context)
 
   >>> layout = zope.component.queryMultiAdapter((view, request, content),
   ...     interface=ILayoutTemplate)
 
-  >>> print layout(view)
+  >>> print(layout(view))
   <div>context-specific layout</div>
 
 
@@ -182,7 +187,8 @@ Its possible to register template by name. Let us register a pagelet with the
 name edit:
 
   >>> editTemplate = os.path.join(temp_dir, 'edit.pt')
-  >>> open(editTemplate, 'w').write('''<div>edit</div>''')
+  >>> with open(editTemplate, 'w') as file:
+  ...     _ = file.write('''<div>edit</div>''')
 
   >>> context = xmlconfig.string("""
   ... <configure
@@ -202,7 +208,7 @@ And call it:
   ...     (view, request),
   ...     interface=IContentTemplate, name='edit')
 
-  >>> print template(view)
+  >>> print(template(view))
   <div>edit</div>
 
 
@@ -222,7 +228,8 @@ Make the template interface available as a custom module class.
 Dfine a new template
 
   >>> interfaceTemplate = os.path.join(temp_dir, 'interface.pt')
-  >>> open(interfaceTemplate, 'w').write('''<div>interface</div>''')
+  >>> with open(interfaceTemplate, 'w') as file:
+  ...     _ = file.write('''<div>interface</div>''')
 
   >>> context = xmlconfig.string("""
   ... <configure
@@ -241,7 +248,7 @@ Let's see if we get the template by the new interface:
   >>> template = zope.component.queryMultiAdapter((view, request),
   ...     interface=IMyTemplate,)
 
-  >>> print template(view)
+  >>> print(template(view))
   <div>interface</div>
 
 

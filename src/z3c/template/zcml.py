@@ -90,7 +90,7 @@ class ITemplateDirective(zope.interface.Interface):
     contentType = zope.schema.BytesLine(
         title = u'Content Type',
         description=u'The content type identifies the type of data.',
-        default='text/html',
+        default=b'text/html',
         required=False,
         )
 
@@ -111,7 +111,7 @@ def templateDirective(
     _context, template, name=u'',
     for_=zope.interface.Interface, layer=IDefaultBrowserLayer,
     provides=z3c.template.interfaces.IContentTemplate,
-    contentType='text/html', macro=None, context=None):
+    contentType=b'text/html', macro=None, context=None):
 
     # Make sure that the template exists
     template = os.path.abspath(str(_context.path(template)))
@@ -139,7 +139,7 @@ def layoutTemplateDirective(
     _context, template, name=u'',
     for_=zope.interface.Interface, layer=IDefaultBrowserLayer,
     provides=z3c.template.interfaces.ILayoutTemplate,
-    contentType='text/html', macro=None, context=None):
+    contentType=b'text/html', macro=None, context=None):
 
     templateDirective(_context, template, name, for_, layer, provides,
                       contentType, macro, context)

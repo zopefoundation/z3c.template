@@ -12,7 +12,5 @@
 #
 ##############################################################################
 """
-$Id$
 """
-
-from template import ViewPageTemplateFile
+from z3c.template.template import ViewPageTemplateFile

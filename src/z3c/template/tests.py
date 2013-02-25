@@ -52,7 +52,6 @@ def setUp(test):
 
 def tearDown(test):
     testing.tearDown(test)
-    #setup.placefulTearDown()
 
 def setUpZPT(suite):
     setUp(suite)

@@ -11,11 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""ZCML Directives
 """
-$Id$
-"""
-__docformat__ = "reStructuredText"
-
 import os
 
 import zope.interface
@@ -87,10 +84,10 @@ class ITemplateDirective(zope.interface.Interface):
         required=False,
         )
 
-    contentType = zope.schema.BytesLine(
+    contentType = zope.schema.ASCIILine(
         title = u'Content Type',
         description=u'The content type identifies the type of data.',
-        default=b'text/html',
+        default='text/html',
         required=False,
         )
 
@@ -111,7 +108,7 @@ def templateDirective(
     _context, template, name=u'',
     for_=zope.interface.Interface, layer=IDefaultBrowserLayer,
     provides=z3c.template.interfaces.IContentTemplate,
-    contentType=b'text/html', macro=None, context=None):
+    contentType='text/html', macro=None, context=None):
 
     # Make sure that the template exists
     template = os.path.abspath(str(_context.path(template)))
@@ -139,7 +136,7 @@ def layoutTemplateDirective(
     _context, template, name=u'',
     for_=zope.interface.Interface, layer=IDefaultBrowserLayer,
     provides=z3c.template.interfaces.ILayoutTemplate,
-    contentType=b'text/html', macro=None, context=None):
+    contentType='text/html', macro=None, context=None):
 
     templateDirective(_context, template, name, for_, layer, provides,
                       contentType, macro, context)

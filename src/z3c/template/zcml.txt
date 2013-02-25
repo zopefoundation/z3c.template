@@ -70,6 +70,8 @@ and check them:
   >>> from z3c.template.template import ViewPageTemplateFile
   >>> isinstance(template, ViewPageTemplateFile)
   True
+  >>> isinstance(template.content_type, str)
+  True
 
   >>> print(template(view))
   <div>content</div>
@@ -104,7 +106,9 @@ Let's get the template
 
 and check them:
 
-  >>> isinstance(template, ViewPageTemplateFile)
+  >>> isinstance(layout, ViewPageTemplateFile)
+  True
+  >>> isinstance(layout.content_type, str)
   True
 
   >>> print(layout(view))

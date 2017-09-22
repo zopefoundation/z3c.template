@@ -52,7 +52,7 @@ setup (
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Zope3'],
-    url = 'http://pypi.python.org/pypi/z3c.template',
+    url = 'https://github.com/zopefoundation/z3c.template',
     packages = find_packages('src'),
     package_dir = {'':'src'},
     namespace_packages = ['z3c'],

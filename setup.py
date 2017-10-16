@@ -17,26 +17,27 @@ import os
 from setuptools import setup, find_packages
 
 def read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+    with open(os.path.join(os.path.dirname(__file__), *rnames)) as f:
+        return f.read()
 
-setup (
+setup(
     name='z3c.template',
     version='2.0.1.dev0',
-    author = "Roger Ineichen and the Zope Community",
-    author_email = "zope-dev@zope.org",
-    description = "A package implementing advanced Page Template patterns.",
+    author="Roger Ineichen and the Zope Community",
+    author_email="zope-dev@zope.org",
+    description="A package implementing advanced Page Template patterns.",
     long_description=(
-        read('README.txt')
+        read('README.rst')
         + '\n\n.. contents::\n\n'+
-        read('src', 'z3c', 'template', 'README.txt')
+        read('src', 'z3c', 'template', 'README.rst')
         + '\n' +
-        read('src', 'z3c', 'template', 'zcml.txt')
+        read('src', 'z3c', 'template', 'zcml.rst')
         + '\n' +
-        read('CHANGES.txt')
+        read('CHANGES.rst')
         ),
-    license = "ZPL 2.1",
-    keywords = "zope3 template layout zpt pagetemplate",
-    classifiers = [
+    license="ZPL 2.1",
+    keywords="zope3 template layout zpt pagetemplate",
+    classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
@@ -52,21 +53,21 @@ setup (
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Zope3'],
-    url = 'https://github.com/zopefoundation/z3c.template',
-    packages = find_packages('src'),
-    package_dir = {'':'src'},
-    namespace_packages = ['z3c'],
-    extras_require = dict(
-        test = [
+    url='https://github.com/zopefoundation/z3c.template',
+    packages=find_packages('src'),
+    package_dir={'':'src'},
+    namespace_packages=['z3c'],
+    extras_require=dict(
+        test=[
             'zope.testing',
             'zope.traversing',
             ],
-        chameleon = [
+        chameleon=[
             'z3c.pt >= 2.1',
             'z3c.ptcompat>=1.0',
             ],
         ),
-    install_requires = [
+    install_requires=[
         'setuptools',
         'zope.browserpage',
         'zope.component',
@@ -76,11 +77,11 @@ setup (
         'zope.publisher',
         'zope.schema',
         ],
-    tests_require = [
+    tests_require=[
         'zope.testing',
         'zope.traversing',
         ],
-    test_suite = 'z3c.template.tests.test_suite',
-    include_package_data = True,
-    zip_safe = False,
-    )
+    test_suite='z3c.template.tests.test_suite',
+    include_package_data=True,
+    zip_safe=False,
+)

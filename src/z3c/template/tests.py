@@ -74,15 +74,16 @@ def test_suite():
     if Z3CPT_AVAILABLE:
         setups += (setUpZ3CPT,)
     tests = ((
-        doctest.DocFileSuite('README.txt',
-            setUp=setUp, tearDown=tearDown,
-            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
-            checker=checker,
-            ),
-        doctest.DocFileSuite('zcml.txt', setUp=setUp, tearDown=tearDown,
-            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
-            checker=checker,
-            ),
-        ) for setUp in setups)
+        doctest.DocFileSuite('README.rst',
+                             setUp=setUp, tearDown=tearDown,
+                             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+                             checker=checker,
+        ),
+        doctest.DocFileSuite('zcml.rst',
+                             setUp=setUp, tearDown=tearDown,
+                             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+                             checker=checker,
+        ),
+    ) for setUp in setups)
 
     return unittest.TestSuite(itertools.chain(*tests))

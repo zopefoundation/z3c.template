@@ -12,7 +12,7 @@
 #
 ##############################################################################
 """
-$Id$
+Implementation of templates.
 """
 
 from zope import component
@@ -28,7 +28,7 @@ class Macro(object):
     # because it (obviously) only supports the Zope page template
     # implementation. As a workaround or trick we use a wrapper
     # template.
-        
+
     wrapper = PageTemplate()
     wrapper.write(
         '<metal:main use-macro="python: options[\'macro\']" />'
@@ -72,22 +72,29 @@ class TemplateFactory(object):
 
 
 class BoundViewTemplate(object):
+    __self__ = None
+    __func__ = None
+
     def __init__(self, pt, ob):
-        object.__setattr__(self, 'im_func', pt)
-        object.__setattr__(self, 'im_self', ob)
+        object.__setattr__(self, '__func__', pt)
+        object.__setattr__(self, '__self__', ob)
+
+    im_self = property(lambda self: self.__self__)
+    im_func = property(lambda self: self.__func__)
+
 
     def __call__(self, *args, **kw):
-        if self.im_self is None:
+        if self.__self__ is None:
             im_self, args = args[0], args[1:]
         else:
-            im_self = self.im_self
-        return self.im_func(im_self, *args, **kw)
+            im_self = self.__self__
+        return self.__func__(im_self, *args, **kw)
 
     def __setattr__(self, name, v):
         raise AttributeError("Can't set attribute", name)
 
     def __repr__(self):
-        return "<BoundViewTemplate of %r>" % self.im_self
+        return "<BoundViewTemplate of %r>" % self.__self__
 
 
 class ViewTemplate(object):

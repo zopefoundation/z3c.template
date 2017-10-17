@@ -1,28 +1,30 @@
-=======
-CHANGES
-=======
+=========
+ CHANGES
+=========
 
-2.0.1 (unreleased)
-------------------
+2.1.0 (unreleased)
+==================
 
-- Nothing changed yet.
+- Add support for PyPy.
+- Add support for Python 3.4, 3.5 and 3.6.
+- Drop support for Python 2.6 and 3.3.
 
 
 2.0.0 (2015-11-09)
-------------------
+==================
 
 - Standardize namespace __init__
 
 
 2.0.0a2 (2013-02-25)
---------------------
+====================
 
 - Make sure the of the templates content type is a native string instead
   forced bytes.
 
 
 2.0.0a1 (2013-02-22)
---------------------
+====================
 
 - Added support for Python 3.3.
 
@@ -33,7 +35,7 @@ CHANGES
 
 
 1.4.1 (2012-02-15)
-------------------
+==================
 
 - Remove hooks to use ViewPageTemplateFile from z3c.pt because this breaks when
   z3c.pt is available, but z3c.ptcompat is not included. As recommended by notes
@@ -41,7 +43,7 @@ CHANGES
 
 
 1.4.0 (2011-10-29)
-------------------
+==================
 
 - Moved z3c.pt include to extras_require chameleon. This makes the package
   independent from chameleon and friends and allows to include this
@@ -74,7 +76,7 @@ CHANGES
 
 
 1.3.0 (2011-10-28)
-------------------
+==================
 
 - Update to z3c.ptcompat 1.0 (and as a result, to the z3c.pt 2.x series).
 
@@ -83,7 +85,7 @@ CHANGES
 
 
 1.2.1 (2009-08-22)
-------------------
+==================
 
 * Corrected description of ``ITemplateDirective.name``.
 
@@ -93,7 +95,7 @@ CHANGES
 
 
 1.2.0 (2009-02-26)
-------------------
+==================
 
 * Add support for context-specific templates. Now, templates can be
   registered and looked up using (view, request, context) triple.
@@ -109,12 +111,12 @@ CHANGES
   instead of retired one.
 
 1.1.0 (2007-10-08)
-------------------
+==================
 
 * Added an ``IContentTemplate`` interface which is used for
   ``<z3c:template>``.
 
 1.0.0 (2007-??-??)
-------------------
+==================
 
 * Initial release.

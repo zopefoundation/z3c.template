@@ -1,6 +1,6 @@
-=============
-Z3C Templates
-=============
+===============
+ Z3C Templates
+===============
 
 This package allows us to separate the registration of the view code and the
 layout.
@@ -28,7 +28,7 @@ more then one template. Now let's take a look how we an use this templates.
 
 
 Content template
-----------------
+================
 
 First let's show how we use a template for produce content from a view:
 
@@ -68,7 +68,7 @@ Since the template is not yet registered, rendering the view will fail:
   >>> print(view.render())
   Traceback (most recent call last):
   ...
-  ComponentLookupError: ......
+  zope.interface.interfaces.ComponentLookupError: ......
 
 Let's now register the template (commonly done using ZCML):
 
@@ -142,7 +142,7 @@ registered one.
 
 
 Layout template
----------------
+===============
 
 First we nee to register a new view class calling a layout template. Note,
 that this view uses the __call__ method for invoke a layout template:
@@ -273,7 +273,7 @@ on the view:
 
 
 Content and Layout
-------------------
+==================
 
 Now let's show how we combine this two templates in a real use case:
 
@@ -347,7 +347,7 @@ Now call the view and check the result:
 
 
 Macros
-------
+======
 
 Use of macros.
 
@@ -380,7 +380,7 @@ impossible to implement multiple skins using named templates.
 
 
 Use case ``simple template``
-----------------------------
+============================
 
 And for the simplest possible use we provide a hook for call registered
 templates. Such page templates can get called with the getPageTemplate method
@@ -423,7 +423,7 @@ created earlier in this test.
 
 
 Context-specific templates
---------------------------
+==========================
 
 The ``TemplateFactory`` can be also used for (view, request, context)
 lookup. It's useful when you want to override a template for specific
@@ -467,7 +467,7 @@ should already use our context-specific template:
 
 
 Use case ``template by interface``
-----------------------------------
+==================================
 
 Templates can also get registered on different interfaces then IPageTemplate
 or ILayoutTemplate.
@@ -499,7 +499,7 @@ Now define a view using such a custom template registration:
 
 
 Use case ``named template``
-----------------------------------
+===========================
 
 Templates can also get registered on names. In this expample we use a named
 template combined with a custom template marker interface.
@@ -531,7 +531,7 @@ Now define a view using such a custom named template registration:
 
 
 Use case ``named layout template``
-----------------------------------
+==================================
 
 We can also register a new layout template by name and use it in a view:
 
@@ -571,13 +571,13 @@ Now define a view using such a custom named template registration:
 
 
 Cleanup
--------
+=======
 
   >>> import shutil
   >>> shutil.rmtree(temp_dir)
 
 
 Pagelet
--------
+=======
 
 See ``z3c.pagelet`` for another template based layout generating implementation.

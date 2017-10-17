@@ -1,6 +1,6 @@
-==================
-Template directive
-==================
+====================
+ Template directive
+====================
 
 Show how we can use the template directive. Register the meta configuration for
 the directive.
@@ -12,7 +12,7 @@ the directive.
 
 
 PageTemplate
-------------
+============
 
 We need a custom content template
 
@@ -76,9 +76,28 @@ and check them:
   >>> print(template(view))
   <div>content</div>
 
+Errors
+------
+
+If we try to use a path to a template that does not exist, we
+get an error:
+
+  >>> context = xmlconfig.string("""
+  ... <configure
+  ...     xmlns:z3c="http://namespaces.zope.org/z3c">
+  ...   <z3c:template
+  ...       template="this_file_does_not_exist"
+  ...       for="custom.IView"
+  ...       />
+  ... </configure>
+  ... """, context=context)
+  Traceback (most recent call last):
+  ...
+  ZopeXMLConfigurationError: File "<string>", line 4.2-7.8
+      ConfigurationError: ('No such file', '...this_file_does_not_exist')
 
 Layout template
----------------
+===============
 
 Define a layout template
 
@@ -116,7 +135,7 @@ and check them:
 
 
 Context-specific template
--------------------------
+=========================
 
 Most of views have some object as their context and it's ofter very
 useful to be able register context-specific template. We can do that
@@ -185,7 +204,7 @@ The same will work with layout registration directive:
 
 
 Named template
---------------
+==============
 
 Its possible to register template by name. Let us register a pagelet with the
 name edit:
@@ -217,7 +236,7 @@ And call it:
 
 
 Custom template
----------------
+===============
 
 Or you can define own interfaces and register templates for them:
 
@@ -257,7 +276,7 @@ Let's see if we get the template by the new interface:
 
 
 Cleanup
--------
+=======
 
 Now we need to clean up the custom module.
 

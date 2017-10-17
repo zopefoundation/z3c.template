@@ -2,7 +2,7 @@
  CHANGES
 =========
 
-2.1.0 (unreleased)
+3.0.0 (unreleased)
 ==================
 
 - Add support for PyPy.
@@ -12,7 +12,9 @@
   attributes to be more like Python 3 bound methods. (``im_func`` and
   ``im_self`` remain available.) See `issue 3
   <https://github.com/zopefoundation/z3c.template/issues/3>`_.
-
+- Depend on Chameleon >= 3.0, z3c.pt >= 2.1 and z3c.ptcompat >= 2.1.0
+  due to possible rendering issues. See `PR 2
+  <https://github.com/zopefoundation/z3c.template/pull/2>`_.
 
 2.0.0 (2015-11-09)
 ==================

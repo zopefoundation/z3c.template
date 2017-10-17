@@ -21,8 +21,10 @@ def read(*rnames):
         return f.read()
 
 CHAMELEON_REQUIRES = [
-    'z3c.pt >= 2.1',
-    'z3c.ptcompat >= 1.0',
+    # Pins because of https://github.com/zopefoundation/z3c.template/pull/2
+    'chameleon >= 3.0',
+    'z3c.pt >= 3.1.0',
+    'z3c.ptcompat >= 2.1.0',
 
 ]
 
@@ -34,7 +36,7 @@ TESTS_REQUIRE = CHAMELEON_REQUIRES + [
 
 setup(
     name='z3c.template',
-    version='2.0.1.dev0',
+    version='3.0.0.dev0',
     author="Roger Ineichen and the Zope Community",
     author_email="zope-dev@zope.org",
     description="A package implementing advanced Page Template patterns.",

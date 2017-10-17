@@ -87,7 +87,7 @@ class TestMacro(unittest.TestCase):
 
 class TestBoundViewTemplate(unittest.TestCase):
 
-    def test_call_no_im_self_uses_first_arg(self):
+    def test_call_no__self__uses_first_arg(self):
         def im_func(*args):
             return args
         bound = z3c.template.template.BoundViewTemplate(im_func, None)
@@ -107,6 +107,15 @@ class TestBoundViewTemplate(unittest.TestCase):
         bound = z3c.template.template.BoundViewTemplate(None, 'im_self')
         self.assertEqual("<BoundViewTemplate of 'im_self'>",
                          repr(bound))
+
+    def test_attributes(self):
+        func = object()
+        bound = z3c.template.template.BoundViewTemplate(func, self)
+        self.assertIs(self, bound.im_self)
+        self.assertIs(self, bound.__self__)
+        self.assertIs(func, bound.im_func)
+        self.assertIs(func, bound.__func__)
+
 
 def test_suite():
     setups = (setUpZPT, setUpZ3CPT)

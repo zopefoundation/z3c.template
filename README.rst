@@ -1,5 +1,5 @@
 ==============
- Z3C template
+ z3c.template
 ==============
 
 

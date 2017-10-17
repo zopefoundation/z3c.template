@@ -2,18 +2,24 @@
  CHANGES
 =========
 
-2.1.0 (unreleased)
+3.0.0 (unreleased)
 ==================
 
 - Add support for PyPy.
 - Add support for Python 3.4, 3.5 and 3.6.
 - Drop support for Python 2.6 and 3.3.
-
+- Make bound page templates have ``__self__`` and ``__func__``
+  attributes to be more like Python 3 bound methods. (``im_func`` and
+  ``im_self`` remain available.) See `issue 3
+  <https://github.com/zopefoundation/z3c.template/issues/3>`_.
+- Depend on Chameleon >= 3.0, z3c.pt >= 2.1 and z3c.ptcompat >= 2.1.0
+  due to possible rendering issues. See `PR 2
+  <https://github.com/zopefoundation/z3c.template/pull/2>`_.
 
 2.0.0 (2015-11-09)
 ==================
 
-- Standardize namespace __init__
+- Standardize namespace ``__init__``
 
 
 2.0.0a2 (2013-02-25)

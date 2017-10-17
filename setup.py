@@ -22,7 +22,7 @@ def read(*rnames):
 
 CHAMELEON_REQUIRES = [
     'z3c.pt >= 2.1',
-    'z3c.ptcompat>=1.0',
+    'z3c.ptcompat >= 1.0',
 
 ]
 
@@ -70,7 +70,7 @@ setup(
     ],
     url='https://github.com/zopefoundation/z3c.template',
     packages=find_packages('src'),
-    package_dir={'':'src'},
+    package_dir={'': 'src'},
     namespace_packages=['z3c'],
     extras_require={
         'test': TESTS_REQUIRE,

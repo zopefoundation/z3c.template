@@ -2,7 +2,7 @@
  CHANGES
 =========
 
-3.0.0 (unreleased)
+3.0.0 (2017-10-18)
 ==================
 
 - Add support for PyPy.

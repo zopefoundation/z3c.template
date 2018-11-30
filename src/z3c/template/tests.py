@@ -91,8 +91,12 @@ class TestBoundViewTemplate(unittest.TestCase):
 
     def test_cant_setattr(self):
         bound = z3c.template.template.BoundViewTemplate(None, None)
-        with self.assertRaisesRegexp(AttributeError,
-                                     "Can't set attribute"):
+        try:
+            raisesRegex = self.assertRaisesRegex
+        except AttributeError:
+            # We are still with python 2.7 here, remove if not supported
+            raisesRegex = self.assertRaisesRegexp
+        with raisesRegex(AttributeError, "Can't set attribute"):
             setattr(bound, 'im_func', 42)
 
     def test_repr(self):

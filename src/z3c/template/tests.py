@@ -15,23 +15,15 @@
 """
 import doctest
 import itertools
-import re
 import unittest
 
 from zope.configuration import xmlconfig
 from zope.component import testing
-from zope.testing import renormalizing
 
 import z3c.pt
 import z3c.ptcompat
 import z3c.template.template
 
-checker = renormalizing.RENormalizing([
-    # Python 3 adds module name to exceptions;
-    # The output of this one is too complex for IGNORE_EXCEPTION_MODULE_IN_PYTHON2
-    (re.compile('zope.configuration.xmlconfig.ZopeXMLConfigurationError'),
-     'ZopeXMLConfigurationError'),
-])
 
 
 def setUp(test):
@@ -125,16 +117,14 @@ def test_suite():
             setUp=setUp, tearDown=tearDown,
             optionflags=(doctest.NORMALIZE_WHITESPACE
                          | doctest.ELLIPSIS
-                         | renormalizing.IGNORE_EXCEPTION_MODULE_IN_PYTHON2),
-            checker=checker,
+                         | doctest.IGNORE_EXCEPTION_DETAIL),
         ),
         doctest.DocFileSuite(
             'zcml.rst',
             setUp=setUp, tearDown=tearDown,
             optionflags=(doctest.NORMALIZE_WHITESPACE
                          | doctest.ELLIPSIS
-                         | renormalizing.IGNORE_EXCEPTION_MODULE_IN_PYTHON2),
-            checker=checker,
+                         | doctest.IGNORE_EXCEPTION_DETAIL),
         ),
     ) for setUp in setups)
     doctests = list(itertools.chain(*doctests))

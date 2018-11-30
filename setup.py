@@ -82,7 +82,7 @@ setup(
         'setuptools',
         'zope.browserpage',
         'zope.component',
-        'zope.configuration',
+        'zope.configuration >= 4.2.0',
         'zope.interface',
         'zope.pagetemplate',
         'zope.publisher',

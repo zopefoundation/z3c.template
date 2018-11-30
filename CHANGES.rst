@@ -6,6 +6,7 @@
 ==================
 
 - Adapt tests to `zope.configuration >= 4.2`.
+- Add support for Python 3.7.
 
 
 3.0.0 (2017-10-18)

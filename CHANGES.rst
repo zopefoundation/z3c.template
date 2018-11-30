@@ -5,7 +5,7 @@
 3.0.1 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Adapt tests to `zope.configuration >= 4.2`.
 
 
 3.0.0 (2017-10-18)

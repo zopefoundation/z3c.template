@@ -2,7 +2,7 @@
  CHANGES
 =========
 
-3.0.1 (unreleased)
+3.1.0 (unreleased)
 ==================
 
 - Adapt tests to `zope.configuration >= 4.2`.

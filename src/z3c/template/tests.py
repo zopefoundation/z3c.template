@@ -75,9 +75,14 @@ class TestMacro(unittest.TestCase):
         macro.wrapper = lambda **kwargs: None
 
         macro()
-        self.assertEqual('text/html', request.response.getHeader("Content-Type"))
+        self.assertEqual(
+            'text/html', request.response.getHeader("Content-Type"))
+
 
 class TestBoundViewTemplate(unittest.TestCase):
+
+    assertRaisesRegex = getattr(unittest.TestCase, 'assertRaisesRegex',
+                                unittest.TestCase.assertRaisesRegexp)
 
     def test_call_no__self__uses_first_arg(self):
         def im_func(*args):
@@ -91,12 +96,7 @@ class TestBoundViewTemplate(unittest.TestCase):
 
     def test_cant_setattr(self):
         bound = z3c.template.template.BoundViewTemplate(None, None)
-        try:
-            raisesRegex = self.assertRaisesRegex
-        except AttributeError:
-            # We are still with python 2.7 here, remove if not supported
-            raisesRegex = self.assertRaisesRegexp
-        with raisesRegex(AttributeError, "Can't set attribute"):
+        with self.assertRaisesRegex(AttributeError, "Can't set attribute"):
             setattr(bound, 'im_func', 42)
 
     def test_repr(self):

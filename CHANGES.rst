@@ -2,7 +2,7 @@
  CHANGES
 =========
 
-3.1.0 (unreleased)
+3.1.0 (2019-02-05)
 ==================
 
 - Adapt tests to `zope.configuration >= 4.2`.

@@ -25,7 +25,6 @@ import z3c.ptcompat
 import z3c.template.template
 
 
-
 def setUp(test):
     testing.setUp(test)
     # Traversal Setup
@@ -33,11 +32,14 @@ def setUp(test):
     setUp()
     test.globs['root'] = object()
 
+
 def tearDown(test):
     testing.tearDown(test)
 
+
 def setUpZPT(suite):
     setUp(suite)
+
 
 def setUpZ3CPT(suite):
     setUp(suite)
@@ -48,6 +50,7 @@ def setUpZ3CPT(suite):
     # global.
     z3c.template.template.Macro.wrapper._cook()
 
+
 class TestMacro(unittest.TestCase):
 
     def test_call_sets_content_type(self):
@@ -56,6 +59,7 @@ class TestMacro(unittest.TestCase):
             def __init__(self):
                 self.headers = {}
                 self.getHeader = self.headers.get
+
             def setHeader(self, k, v):
                 self.headers[k] = v
 

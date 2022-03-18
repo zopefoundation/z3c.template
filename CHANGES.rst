@@ -5,7 +5,9 @@
 3.2 (unreleased)
 ================
 
-- Nothing changed yet.
+- Add support for Python 3.8, 3.9, and 3.10.
+
+- Drop support for Python 3.4.
 
 
 3.1.0 (2019-02-05)

@@ -32,7 +32,7 @@ class Macro(object):
     wrapper = PageTemplate()
     wrapper.write(
         '<metal:main use-macro="python: options[\'macro\']" />'
-        )
+    )
 
     def __init__(self, template, name, view, request, contentType):
         self.macro = template.macros[name]
@@ -82,7 +82,6 @@ class BoundViewTemplate(object):
     im_self = property(lambda self: self.__self__)
     im_func = property(lambda self: self.__func__)
 
-
     def __call__(self, *args, **kw):
         if self.__self__ is None:
             im_self, args = args[0], args[1:]
@@ -108,12 +107,13 @@ class ViewTemplate(object):
             self.provides, name=self.name)
         if template is None:
             template = component.getMultiAdapter(
-                    (instance, instance.request),
-                    self.provides, name=self.name)
+                (instance, instance.request),
+                self.provides, name=self.name)
         return template(instance, *args, **keywords)
 
     def __get__(self, instance, type):
         return BoundViewTemplate(self, instance)
+
 
 getViewTemplate = ViewTemplate
 
@@ -124,6 +124,7 @@ class GetPageTemplate(ViewTemplate):
         self.provides = interfaces.IContentTemplate
         self.name = name
 
+
 getPageTemplate = GetPageTemplate
 
 
@@ -132,5 +133,6 @@ class GetLayoutTemplate(ViewTemplate):
     def __init__(self, name=u''):
         self.provides = interfaces.ILayoutTemplate
         self.name = name
+
 
 getLayoutTemplate = GetLayoutTemplate

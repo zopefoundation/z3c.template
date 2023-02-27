@@ -15,10 +15,10 @@
 """
 import os
 
-import zope.interface
 import zope.component.zcml
-import zope.schema
 import zope.configuration.fields
+import zope.interface
+import zope.schema
 from zope.configuration.exceptions import ConfigurationError
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 

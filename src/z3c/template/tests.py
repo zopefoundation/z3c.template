@@ -17,11 +17,11 @@ import doctest
 import itertools
 import unittest
 
-from zope.configuration import xmlconfig
-from zope.component import testing
-
 import z3c.pt
 import z3c.ptcompat
+from zope.component import testing
+from zope.configuration import xmlconfig
+
 import z3c.template.template
 
 

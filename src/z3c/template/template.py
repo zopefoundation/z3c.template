@@ -16,9 +16,9 @@ Implementation of templates.
 """
 
 from zope import component
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.pagetemplate.interfaces import IPageTemplate
 from zope.pagetemplate.pagetemplate import PageTemplate
-from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 
 from z3c.template import interfaces
 

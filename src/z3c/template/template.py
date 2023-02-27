@@ -23,7 +23,7 @@ from zope.pagetemplate.pagetemplate import PageTemplate
 from z3c.template import interfaces
 
 
-class Macro(object):
+class Macro:
     # XXX: We can't use Zope's `TALInterpreter` class directly
     # because it (obviously) only supports the Zope page template
     # implementation. As a workaround or trick we use a wrapper
@@ -53,7 +53,7 @@ class Macro(object):
         return result
 
 
-class TemplateFactory(object):
+class TemplateFactory:
     """Template factory."""
 
     template = None
@@ -71,7 +71,7 @@ class TemplateFactory(object):
             self.template, self.macro, view, request, self.contentType)
 
 
-class BoundViewTemplate(object):
+class BoundViewTemplate:
     __self__ = None
     __func__ = None
 
@@ -96,8 +96,8 @@ class BoundViewTemplate(object):
         return "<BoundViewTemplate of %r>" % self.__self__
 
 
-class ViewTemplate(object):
-    def __init__(self, provides=IPageTemplate, name=u''):
+class ViewTemplate:
+    def __init__(self, provides=IPageTemplate, name=''):
         self.provides = provides
         self.name = name
 
@@ -120,7 +120,7 @@ getViewTemplate = ViewTemplate
 
 class GetPageTemplate(ViewTemplate):
 
-    def __init__(self, name=u''):
+    def __init__(self, name=''):
         self.provides = interfaces.IContentTemplate
         self.name = name
 
@@ -130,7 +130,7 @@ getPageTemplate = GetPageTemplate
 
 class GetLayoutTemplate(ViewTemplate):
 
-    def __init__(self, name=u''):
+    def __init__(self, name=''):
         self.provides = interfaces.ILayoutTemplate
         self.name = name
 

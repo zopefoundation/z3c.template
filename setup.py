@@ -42,7 +42,7 @@ setup(
     name='z3c.template',
     version='4.0.dev0',
     author="Roger Ineichen and the Zope Community",
-    author_email="zope-dev@zope.org",
+    author_email="zope-dev@zope.dev",
     description="A package implementing advanced Page Template patterns.",
     long_description=(
         read('README.rst')

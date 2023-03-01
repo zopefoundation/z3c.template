@@ -14,7 +14,9 @@
 """Setup
 """
 import os
-from setuptools import setup, find_packages
+
+from setuptools import find_packages
+from setuptools import setup
 
 
 def read(*rnames):
@@ -38,9 +40,9 @@ TESTS_REQUIRE = CHAMELEON_REQUIRES + [
 
 setup(
     name='z3c.template',
-    version='3.3.dev0',
+    version='4.0.dev0',
     author="Roger Ineichen and the Zope Community",
-    author_email="zope-dev@zope.org",
+    author_email="zope-dev@zope.dev",
     description="A package implementing advanced Page Template patterns.",
     long_description=(
         read('README.rst')
@@ -58,27 +60,25 @@ setup(
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Zope Public License',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Programming Language :: Python',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
-        'Framework :: Zope :: 3'
+        'Framework :: Zope :: 3',
     ],
     url='https://github.com/zopefoundation/z3c.template',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     namespace_packages=['z3c'],
+    python_requires='>=3.7',
     extras_require={
         'test': TESTS_REQUIRE,
         'chameleon': CHAMELEON_REQUIRES,

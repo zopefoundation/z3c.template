@@ -15,10 +15,10 @@
 """
 import os
 
-import zope.interface
 import zope.component.zcml
-import zope.schema
 import zope.configuration.fields
+import zope.interface
+import zope.schema
 from zope.configuration.exceptions import ConfigurationError
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
@@ -30,21 +30,21 @@ class ITemplateDirective(zope.interface.Interface):
     """Parameters for the template directive."""
 
     template = zope.configuration.fields.Path(
-        title=u'Layout template.',
-        description=u"Refers to a file containing a page template (should "
+        title='Layout template.',
+        description="Refers to a file containing a page template (should "
         "end in extension ``.pt`` or ``.html``).",
         required=True,
     )
 
     name = zope.schema.TextLine(
-        title=u"The name of the template.",
-        description=u"The name is used to look up the template.",
-        default=u'',
+        title="The name of the template.",
+        description="The name is used to look up the template.",
+        default='',
         required=False)
 
     macro = zope.schema.TextLine(
-        title=u'Macro',
-        description=u"""
+        title='Macro',
+        description="""
             The macro to be used.
             This allows us to define different macros in one template.
             The template designer can now create a whole site, the
@@ -52,41 +52,41 @@ class ITemplateDirective(zope.interface.Interface):
             or views.
             If no macro is given the whole template is used for rendering.
             """,
-        default=u'',
+        default='',
         required=False,
     )
 
     for_ = zope.configuration.fields.GlobalObject(
-        title=u'View',
-        description=u'The view for which the template should be available',
+        title='View',
+        description='The view for which the template should be available',
         default=zope.interface.Interface,
         required=False,
     )
 
     layer = zope.configuration.fields.GlobalObject(
-        title=u'Layer',
-        description=u'The layer for which the template should be available',
+        title='Layer',
+        description='The layer for which the template should be available',
         required=False,
         default=IDefaultBrowserLayer,
     )
 
     context = zope.configuration.fields.GlobalObject(
-        title=u'Context',
-        description=u'The context for which the template should be available',
+        title='Context',
+        description='The context for which the template should be available',
         required=False,
     )
 
     provides = zope.configuration.fields.GlobalInterface(
-        title=u"Interface the template provides",
-        description=u"This attribute specifies the interface the template"
+        title="Interface the template provides",
+        description="This attribute specifies the interface the template"
         " instance will provide.",
         default=z3c.template.interfaces.IContentTemplate,
         required=False,
     )
 
     contentType = zope.schema.ASCIILine(
-        title=u'Content Type',
-        description=u'The content type identifies the type of data.',
+        title='Content Type',
+        description='The content type identifies the type of data.',
         default='text/html',
         required=False,
     )
@@ -96,8 +96,8 @@ class ILayoutTemplateDirective(ITemplateDirective):
     """Parameters for the layout template directive."""
 
     provides = zope.configuration.fields.GlobalInterface(
-        title=u"Interface the template provides",
-        description=u"This attribute specifies the interface the template"
+        title="Interface the template provides",
+        description="This attribute specifies the interface the template"
         " instance will provide.",
         default=z3c.template.interfaces.ILayoutTemplate,
         required=False,
@@ -105,7 +105,7 @@ class ILayoutTemplateDirective(ITemplateDirective):
 
 
 def templateDirective(
-        _context, template, name=u'',
+        _context, template, name='',
         for_=zope.interface.Interface, layer=IDefaultBrowserLayer,
         provides=z3c.template.interfaces.IContentTemplate,
         contentType='text/html', macro=None, context=None):
@@ -133,7 +133,7 @@ def templateDirective(
 
 
 def layoutTemplateDirective(
-        _context, template, name=u'',
+        _context, template, name='',
         for_=zope.interface.Interface, layer=IDefaultBrowserLayer,
         provides=z3c.template.interfaces.ILayoutTemplate,
         contentType='text/html', macro=None, context=None):

@@ -17,11 +17,11 @@ import doctest
 import itertools
 import unittest
 
-from zope.configuration import xmlconfig
-from zope.component import testing
-
 import z3c.pt
 import z3c.ptcompat
+from zope.component import testing
+from zope.configuration import xmlconfig
+
 import z3c.template.template
 
 
@@ -55,7 +55,7 @@ class TestMacro(unittest.TestCase):
 
     def test_call_sets_content_type(self):
 
-        class Response(object):
+        class Response:
             def __init__(self):
                 self.headers = {}
                 self.getHeader = self.headers.get
@@ -63,11 +63,11 @@ class TestMacro(unittest.TestCase):
             def setHeader(self, k, v):
                 self.headers[k] = v
 
-        class Request(object):
+        class Request:
             def __init__(self):
                 self.response = Response()
 
-        class Template(object):
+        class Template:
             def __init__(self):
                 self.macros = {}
 

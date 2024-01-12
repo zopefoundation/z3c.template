@@ -85,9 +85,6 @@ class TestMacro(unittest.TestCase):
 
 class TestBoundViewTemplate(unittest.TestCase):
 
-    assertRaisesRegex = getattr(unittest.TestCase, 'assertRaisesRegex',
-                                unittest.TestCase.assertRaisesRegexp)
-
     def test_call_no__self__uses_first_arg(self):
         def im_func(*args):
             return args

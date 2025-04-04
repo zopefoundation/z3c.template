@@ -5,11 +5,9 @@
 4.1 (unreleased)
 ================
 
-- Add support for Python 3.13.
+- Add support for Python 3.12, 3.13.
 
 - Drop support for Python 3.7, 3.8.
-
-- Add support for Python 3.12.
 
 
 4.0 (2023-03-01)

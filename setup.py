@@ -15,7 +15,6 @@
 """
 import os
 
-from setuptools import find_packages
 from setuptools import setup
 
 
@@ -34,7 +33,7 @@ CHAMELEON_REQUIRES = [
 
 TESTS_REQUIRE = CHAMELEON_REQUIRES + [
     'zope.testing',
-    'zope.testrunner',
+    'zope.testrunner >= 6.4',
     'zope.traversing',
 ]
 
@@ -75,9 +74,6 @@ setup(
         'Framework :: Zope :: 3',
     ],
     url='https://github.com/zopefoundation/z3c.template',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
-    namespace_packages=['z3c'],
     python_requires='>=3.9',
     extras_require={
         'test': TESTS_REQUIRE,

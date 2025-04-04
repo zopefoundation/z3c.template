@@ -40,7 +40,7 @@ TESTS_REQUIRE = CHAMELEON_REQUIRES + [
 
 setup(
     name='z3c.template',
-    version='4.1.dev0',
+    version='4.1',
     author="Roger Ineichen and the Zope Community",
     author_email="zope-dev@zope.dev",
     description="A package implementing advanced Page Template patterns.",

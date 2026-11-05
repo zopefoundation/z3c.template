@@ -7,6 +7,75 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+
+[project]
+name = "z3c.template"
+version = "5.1.dev0"
+description = "A package implementing advanced Page Template patterns."
+license = "ZPL-2.1"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Programming Language :: Python",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Topic :: Internet :: WWW/HTTP",
+    "Framework :: Zope :: 3",
+]
+dynamic = ["readme"]
+requires-python = ">=3.11"
+authors = [
+    {name = "Roger Ineichen and the Zope Community",email = "zope-dev@zope.dev"},
+]
+maintainers = [
+    {name = "Plone Foundation and contributors",email = "zope-dev@zope.dev"},
+]
+dependencies = [
+    "zope.browserpage",
+    "zope.component",
+    "zope.configuration >= 4.2.0",
+    "zope.interface",
+    "zope.pagetemplate",
+    "zope.publisher",
+    "zope.schema",
+]
+keywords = [
+    "zope3",
+    "template",
+    "layout",
+    "zpt",
+    "pagetemplate",
+]
+
+[project.optional-dependencies]
+test = [
+    "chameleon >= 3.0",
+    "z3c.pt >= 3.1.0",
+    "z3c.ptcompat >= 2.1.0",
+    "zope.testing",
+    "zope.testrunner >= 6.4",
+    "zope.traversing",
+]
+chameleon = [
+    "chameleon >= 3.0",
+    "z3c.pt >= 3.1.0",
+    "z3c.ptcompat >= 2.1.0",
+]
+
+[project.urls]
+Source = "https://github.com/zopefoundation/z3c.template"
+Issues = "https://github.com/zopefoundation/z3c.template/issues"
+Changelog = "https://raw.githubusercontent.com/zopefoundation/z3c.template/master/CHANGES.rst"
+
 [tool.coverage.run]
 branch = true
 source = ["z3c.template"]
@@ -29,3 +98,6 @@ exclude_lines = [
 
 [tool.coverage.html]
 directory = "parts/htmlcov"
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst", "CHANGES.rst"]}

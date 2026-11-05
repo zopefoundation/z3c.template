@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "z3c.template"
-version = "5.1"
+version = "5.2.dev0"
 description = "A package implementing advanced Page Template patterns."
 license = "ZPL-2.1"
 classifiers = [
